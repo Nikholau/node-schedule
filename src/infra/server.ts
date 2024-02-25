@@ -6,9 +6,7 @@ const app = express();
 app.use(express.json());
 
 connectionSource.initialize()
-    .then(() => {
-       console.log('conectado ao banco de dados');
-    })
+    .then(() => {})
     .catch((error) => console.log(error))
 
 app.get('/tasks', async (req, res) => {
@@ -28,6 +26,4 @@ app.post('/tasks', async (req, res) => {
   return res.json(task);
 });
 
-app.listen(3333, () => {
-  console.log('listening on port 3333');
-});
+app.listen(3333, () => {});
