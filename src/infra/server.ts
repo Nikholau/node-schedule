@@ -5,16 +5,13 @@ import { connectionSource } from '../ormconfig';
 const app = express();
 app.use(express.json());
 
-async function fetchTasks() {
-  const taskRepository = connectionSource.getRepository(Task)
-  const allTasks = await taskRepository.find()
-  console.log("All tasks from the db: ", allTasks)
-}
-
-fetchTasks();
-
-app.get('/', (req, res) => {
-  return res.json({ message: 'Hello World' });
+app.get('/tasks', async (req, res) => {
+  try {
+    const tasks = await connectionSource.getRepository(Task).find();
+    return res.json(tasks);
+  } catch (error) {
+    return res.status(500).json({ message: 'Erro ao buscar tarefas', error });
+  }
 });
 
 
